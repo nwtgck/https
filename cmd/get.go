@@ -8,19 +8,19 @@ import (
 	"os"
 )
 
-var postInsecure bool
+var getInsecure bool
 
 func init() {
-	RootCmd.AddCommand(postCmd)
+	RootCmd.AddCommand(getCmd)
 
 	// Flags
 	// NOTE: --insecure, -k is inspired by curl
-	postCmd.Flags().BoolVarP(&postInsecure, "insecure", "k", false, "Allow insecure server connections when using SS")
+	getCmd.Flags().BoolVarP(&getInsecure, "insecure", "k", false, "Allow insecure server connections when using SS")
 }
 
-var postCmd = &cobra.Command{
-	Use:   "post",
-	Short: "HTTP POST method",
+var getCmd = &cobra.Command{
+	Use:   "get",
+	Short: "HTTP GET method",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
 			return fmt.Errorf("URL should be specified")
@@ -28,15 +28,10 @@ var postCmd = &cobra.Command{
 		// Get server URL
 		// TODO: improve usability to fill "https://" automatically
 		serverUrlStr := args[0]
-		// Read from stdin
-		// NOTE: reader can be change in the future by options
-		reader := os.Stdin
-		// TODO: Hard code
-		contentType := "application/octet-stream"
 		// Get HTTP client
-		httpClient := util.GetHttpClient(postInsecure)
+		httpClient := util.GetHttpClient(getInsecure)
 		// Post
-		resp, err := httpClient.Post(serverUrlStr, contentType, reader)
+		resp, err := httpClient.Get(serverUrlStr)
 		if err != nil {
 			return err
 		}
