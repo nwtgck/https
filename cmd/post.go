@@ -4,10 +4,9 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/spf13/cobra"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
-	"strings"
 )
 
 func init() {
@@ -27,7 +26,8 @@ var postCmd = &cobra.Command{
 		// TODO: improve usability to fill "https://" automatically
 		serverUrlStr := args[0]
 
-		// TODO: Hard code
+		// Read from stdin
+		// NOTE: reader can be change in the future by options
 		reader := os.Stdin
 		// TODO: Hard code
 		contentType := "application/octet-stream"
@@ -42,10 +42,8 @@ var postCmd = &cobra.Command{
 		}
 		defer resp.Body.Close()
 
-		// TODO: Output body as a stream
-		fileIdBytes, _ := ioutil.ReadAll(resp.Body)
-		fileId := strings.TrimRight(string(fileIdBytes), "\n")
-		fmt.Println(fileId)
+		// Output body as a stream
+		io.Copy(os.Stdout, resp.Body)
 
 		return nil
 	},
