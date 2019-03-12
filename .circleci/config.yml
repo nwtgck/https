@@ -37,10 +37,10 @@ jobs:
                 platform_split=(${platform//\// })
                 export GOOS=${platform_split[0]}
                 export GOARCH=${platform_split[1]}
-                BUILD_PATH=ibk-$GOOS-$GOARCH
+                BUILD_PATH=https-$GOOS-$GOARCH
                 mkdir $BUILD_PATH
                 # Build
-                go build -o $BUILD_PATH/ibk main.go
+                go build -o $BUILD_PATH/https main.go
                 # Create .zip
                 zip -r $DIST/$BUILD_PATH.zip $BUILD_PATH
                 # Create .tar.gz
