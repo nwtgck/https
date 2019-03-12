@@ -25,9 +25,11 @@ var postCmd = &cobra.Command{
 		if len(args) != 1 {
 			return fmt.Errorf("URL should be specified")
 		}
-		// Get server URL
-		// TODO: improve usability to fill "https://" automatically
-		serverUrlStr := args[0]
+		// Get server URL and fill https if need
+		serverUrlStr, err := util.FillHttps(args[0])
+		if err != nil {
+			return err
+		}
 		// Read from stdin
 		// NOTE: reader can be change in the future by options
 		reader := os.Stdin
