@@ -1,4 +1,6 @@
 # https
+[![CircleCI](https://circleci.com/gh/nwtgck/https.svg?style=shield)](https://circleci.com/gh/nwtgck/https)
+
 **HTTP** **S**tream CLI
 
 ## Purpose
@@ -10,6 +12,10 @@ The purpose of `https` command is to
 The last `s` of `https` has both meanings of **s**tream and HTTP**S** for usability of the flow and higher security.
 
 The design policy is using the same option names as `curl`'s to relieve users' burden not to remember new things and not have confusion as much as possible.
+
+## Installation
+
+Get executable binaries from [GitHub Releases](https://github.com/nwtgck/https/releases)
 
 ## Usage
 
