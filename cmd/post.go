@@ -15,7 +15,7 @@ func init() {
 
 	// Flags
 	// NOTE: --insecure, -k is inspired by curl
-	postCmd.Flags().BoolVarP(&postInsecure, "insecure", "k", false, "Allow insecure server connections when using SS")
+	postCmd.Flags().BoolVarP(&postInsecure, "insecure", "k", false, "Allow insecure server connections when using SSL")
 }
 
 var postCmd = &cobra.Command{
