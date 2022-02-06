@@ -17,6 +17,13 @@ The design policy is using the same option names as `curl`'s to relieve users' b
 
 Get executable binaries from [GitHub Releases](https://github.com/nwtgck/https/releases)
 
+
+OR
+
+```bash
+brew install nwtgck/https/https
+```
+
 ## Usage
 
 ```bash
