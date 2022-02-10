@@ -8,14 +8,18 @@ import (
 	"os"
 )
 
-var postInsecure bool
+var postFlag struct {
+	insecure bool
+	http3    bool
+}
 
 func init() {
 	RootCmd.AddCommand(postCmd)
 
 	// Flags
 	// NOTE: --insecure, -k is inspired by curl
-	postCmd.Flags().BoolVarP(&postInsecure, "insecure", "k", false, "Allow insecure server connections when using SSL")
+	postCmd.Flags().BoolVarP(&postFlag.insecure, "insecure", "k", false, "Allow insecure server connections when using SSL/TLS")
+	postCmd.Flags().BoolVarP(&postFlag.http3, "http3", "", false, "HTTP3 (experimental)")
 }
 
 var postCmd = &cobra.Command{
@@ -36,7 +40,7 @@ var postCmd = &cobra.Command{
 		// TODO: Hard code
 		contentType := "application/octet-stream"
 		// Get HTTP client
-		httpClient := util.GetHttpClient(postInsecure)
+		httpClient := util.GetHttpClient(postFlag.insecure, postFlag.http3)
 		// Post
 		resp, err := httpClient.Post(serverUrlStr, contentType, reader)
 		if err != nil {
