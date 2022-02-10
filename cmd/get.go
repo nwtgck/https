@@ -8,14 +8,18 @@ import (
 	"os"
 )
 
-var getInsecure bool
+var getFlags struct {
+	insecure bool
+	http3    bool
+}
 
 func init() {
 	RootCmd.AddCommand(getCmd)
 
 	// Flags
 	// NOTE: --insecure, -k is inspired by curl
-	getCmd.Flags().BoolVarP(&getInsecure, "insecure", "k", false, "Allow insecure server connections when using SS")
+	getCmd.Flags().BoolVarP(&getFlags.insecure, "insecure", "k", false, "Allow insecure server connections when using SSL/TLS")
+	getCmd.Flags().BoolVarP(&getFlags.http3, "http3", "", false, "HTTP3 (experimental)")
 }
 
 var getCmd = &cobra.Command{
@@ -31,7 +35,7 @@ var getCmd = &cobra.Command{
 			return err
 		}
 		// Get HTTP client
-		httpClient := util.GetHttpClient(getInsecure)
+		httpClient := util.GetHttpClient(getFlags.insecure, getFlags.http3)
 		// Post
 		resp, err := httpClient.Get(serverUrlStr)
 		if err != nil {
