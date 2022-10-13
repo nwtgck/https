@@ -4,4 +4,4 @@ go 1.16
 
 require github.com/spf13/cobra v1.3.0
 
-require github.com/lucas-clemente/quic-go v0.25.0
+require github.com/lucas-clemente/quic-go v0.29.2
